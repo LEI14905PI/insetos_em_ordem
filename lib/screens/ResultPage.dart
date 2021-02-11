@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:insetos_em_ordem/key/IdentificationKey.dart';
 
+// not in use right now
+
 class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

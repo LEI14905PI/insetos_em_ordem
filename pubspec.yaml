@@ -20,7 +20,7 @@ dependencies:
   xml: ^3.5.0
   flutter:
     sdk: flutter
-
+  sqflite: ^1.3.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -35,8 +35,59 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
-assets:
-  - assets/
+  assets:
+   - assets/refImages/
+   - assets/hintImages/1/
+   - assets/hintImages/1/asas duras/
+   - assets/hintImages/1/asas membranosas/
+   - assets/hintImages/2/
+   - assets/hintImages/3/
+   - assets/hintImages/4/
+   - assets/hintImages/5/
+   - assets/hintImages/6/
+   - assets/hintImages/7/
+   - assets/hintImages/8/
+   - assets/hintImages/9/
+   - assets/hintImages/10/
+   - assets/hintImages/11/
+   - assets/hintImages/12/
+   - assets/hintImages/13/
+   - assets/hintImages/14/
+   - assets/hintImages/15/
+   - assets/hintImages/16/
+   - assets/hintImages/17/
+   - assets/hintImages/18/
+   - assets/hintImages/19/
+   - assets/hintImages/20/
+   - assets/hintImages/21/
+   - assets/hintImages/22/
+   - assets/resultImages/Blatodea/
+   - assets/resultImages/Coleoptera/
+   - assets/resultImages/Dermaptera/
+   - assets/resultImages/Diptera/
+   - assets/resultImages/Diptera/moscas/
+   - assets/resultImages/Diptera/mosquitos/
+   - assets/resultImages/Ephemeroptera/
+   - assets/resultImages/Hemiptera/
+   - assets/resultImages/Hemiptera/Heteroptera/
+   - assets/resultImages/Hemiptera/Homoptera/
+   - assets/resultImages/Hymenoptera/
+   - assets/resultImages/Hymenoptera/Apocrita/
+   - assets/resultImages/Hymenoptera/Symphyta/
+   - assets/resultImages/Lepidoptera/
+   - assets/resultImages/Lepidoptera/Heterocera/
+   - assets/resultImages/Lepidoptera/Rhopalocera/
+   - assets/resultImages/Mantodea/
+   - assets/resultImages/Mecoptera/
+   - assets/resultImages/Neuroptera/
+   - assets/resultImages/Odonata/
+   - assets/resultImages/Odonata/Anisoptera/
+   - assets/resultImages/Odonata/Zygoptera/
+   - assets/resultImages/Orthoptera/
+   - assets/resultImages/Orthoptera/compridas/
+   - assets/resultImages/Orthoptera/curtas/
+   - assets/resultImages/Phasmidae/
+   - assets/resultImages/Trichoptera/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
