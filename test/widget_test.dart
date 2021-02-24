@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:insetos_em_ordem/main.dart';
-import 'package:insetos_em_ordem/screens/LandingPage.dart';
+import 'package:insetos_em_ordem/screens/landing_page.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
