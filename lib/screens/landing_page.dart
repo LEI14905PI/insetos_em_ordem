@@ -3,7 +3,6 @@ import 'identification_page.dart';
 import 'list_page.dart';
 import 'credits_page.dart';
 
-
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

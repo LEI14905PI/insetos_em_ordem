@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:insetos_em_ordem/models/identification_model.dart';
 import 'package:insetos_em_ordem/services/identification_service.dart';
 
@@ -15,6 +16,11 @@ class _ListPageState extends State<ListPage> {
   var identification;
 
   List<Identification> _identificationList = List<Identification>();
+
+  String subject, body, email;
+
+
+  final emailController = TextEditingController();
 
   @override
   void initState(){
@@ -42,19 +48,15 @@ class _ListPageState extends State<ListPage> {
     });
   }
 
-  _detailIdentidication(BuildContext context, identificationId) async {
-    identification = await _identificationService.readIdentificationById(identificationId);
-    setState(() {
-
-    });
-  }
-
-  _detailDialog(BuildContext context, identificationId){
+  _emailDialog(BuildContext context, identificationId){
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (param) {
           return AlertDialog(
+            content: TextField(
+              controller: emailController,
+            ),
             actions: [
               FlatButton(
                 color: Colors.grey,
@@ -64,17 +66,16 @@ class _ListPageState extends State<ListPage> {
               FlatButton(
                 color: Colors.redAccent,
                 onPressed: ()   async {
-                  var result = await _identificationService.deleteIdentification(identificationId);
-                  if (result > 0) {
-                    Navigator.pop(context);
-                    getAllIdentifications();
-                    _showSuccessSnackBar(Text('Apagado com sucesso'));
-                  }
+                  email = emailController.text;
+                  subject = identificationId;
+                  body = identificationId;
+                  _sendMail(email, subject, body);
+
                 },
-                child: Text('Apagar'),
+                child: Text('Enviar'),
               )
             ],
-            title: Text('Confirme para apagar.'),
+            title: Text('Insira o email para enviar.'),
           );
         }
     );
@@ -111,12 +112,21 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
+
   Widget listOrEmpty() {
     return _identificationList.isNotEmpty
     ? ListView.builder(
         itemCount: _identificationList.length, itemBuilder: (context, index){
       return Card(
         child: ListTile(
+          leading: IconButton(
+            icon: Icon(
+              Icons.send,
+            ),
+            onPressed: () {
+              _emailDialog(context, _identificationList[index].insectOrder);
+            } ,
+          ),
           trailing: IconButton(
             icon: Icon(
               Icons.delete,
@@ -130,7 +140,7 @@ class _ListPageState extends State<ListPage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_identificationList[index].insectOrder, style: TextStyle(fontSize: 12.0),),
+              Text(_identificationList[index].insectOrder, style: TextStyle(fontSize: 10.0),),
             ],
           ),
         ),
@@ -143,10 +153,22 @@ class _ListPageState extends State<ListPage> {
   }
   
   @override
+
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _globalKey,
       body: listOrEmpty()
     );
   }
+
+  void _sendMail(String email, String subject, String body) async {
+    final url = 'mailto:$email?subject=$subject&body=$body';
+    if(await canLaunch(url)) {
+      await launch(url);
+    }else{
+      throw 'Não foi possível enviar. $url';
+    }
+  }
+
 }

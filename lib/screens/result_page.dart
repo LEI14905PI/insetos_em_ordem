@@ -49,23 +49,29 @@ class ResultPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              new Expanded(
-                child: Column(
-                  children: [
-                    new Text(resultOrder),
-                    //new Text(finalResult.getDescription().toString()),
-                    OutlinedButton(
-                      onPressed: () {
-                        //_savePreferences();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SavePage(currentFragmentID:currentFragmentID,resultOrder:resultOrder, resultDescription:resultDescription, resultImagePath:resultImagePath)),
-                        );
-                      },
-                      child: Text("GUARDAR", style: new TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),),
+              Column(
+                children: [
+                  new Text(resultOrder),
+                  //new Text(finalResult.getDescription().toString()),
+                  OutlinedButton(
+                    onPressed: () {
+                      //_savePreferences();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SavePage(currentFragmentID:currentFragmentID,resultOrder:resultOrder, resultDescription:resultDescription, resultImagePath:resultImagePath)),
+                      );
+                    },
+                    child: Text("GUARDAR", style: new TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),),
+                  ),
+                ],
+              ),
+              new Expanded(child:
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SingleChildScrollView(
+                      child: Text(resultDescription),
                     ),
-                  ],
-                ),
+                  )
               ),
               new Expanded(
                 child: fullScreenImage('assets/$resultImagePath')

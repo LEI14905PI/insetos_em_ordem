@@ -1,27 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:insetos_em_ordem/models/identification_model.dart';
 import 'package:insetos_em_ordem/screens/list_page.dart';
 import 'package:insetos_em_ordem/services/identification_service.dart';
 
-class SavePage extends StatelessWidget {
-  /*void _retrievePreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      resultOrder = (prefs.getString(resultOrder));
-    });
-  }*/
+class SavePage extends StatefulWidget {
 
   String currentFragmentID;
   String resultOrder;
   String resultDescription;
   String resultImagePath;
 
-  String latitude;
-  String longitude;
-  String timestamp;
 
   SavePage( {Key key, @required this.currentFragmentID,this.resultOrder,this.resultDescription,this.resultImagePath}) : super(key: key);
+
+  @override
+  _SavePageState createState() => _SavePageState();
+}
+
+class _SavePageState extends State<SavePage> {
+  String latitude;
+
+  String longitude;
+
+
+  Position _currentPosition;
+
+
+  //String timestamp = DateFormat('yyyy-MM-dd – kk:mm').format(time);
+  //String convertedDateTime = "${now.year.toString()}-${now.month.toString().padLeft(2,'0')}-${now.day.toString().padLeft(2,'0')} ${now.hour.toString()}-${now.minute.toString()}";
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +39,8 @@ class SavePage extends StatelessWidget {
     var _identification = Identification();
     var _identificationService = IdentificationService();
 
-    var now = new DateTime.now();
-    //print(now);
-    //print(_locationData);
+    DateTime now = DateTime.now();
+    String timestamp = DateFormat('yyyy-MM-dd – kk:mm').format(now);
 
     return Scaffold(
       backgroundColor: Colors.greenAccent,
@@ -47,13 +56,25 @@ class SavePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    new Text(resultOrder),
+                    new Text(widget.resultOrder, style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),),
+                    new Text(timestamp),
                     //new Text(finalResult.getDescription().toString()),
+                    if (_currentPosition != null)
+                      Text(
+                          "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
+                    RaisedButton(
+                      child: Text("Obter coordenadas."),
+                      onPressed: () {
+                        _getCurrentLocation();
+                      },
+                    ),
                     OutlinedButton(
                       onPressed: () async {
-                        _identification.keyId = currentFragmentID;
-                        _identification.insectOrder = resultOrder;
+                        _identification.keyId = widget.currentFragmentID;
+                        _identification.insectOrder = widget.resultOrder;
                         _identification.timestamp = timestamp;
+                        _identification.latitude = _currentPosition.latitude;
+                        _identification.longitude = _currentPosition.longitude;
                         var result = _identificationService.saveIdentification(_identification);
                         print(result);
                         Navigator.push(
@@ -71,5 +92,19 @@ class SavePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 }
