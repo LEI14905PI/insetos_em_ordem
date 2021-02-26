@@ -30,15 +30,15 @@ class DatabaseHelper{
   }
 
   //read data
-  readDataById(table, itemId) async {
+  readDataById(table, identificationId) async {
     var connection = await database;
-    return await connection.query(table, where: 'rowid=?', whereArgs: [itemId]);
+    return await connection.query(table, where: 'id=?', whereArgs: [identificationId]);
   }
 
   //read data
-  deleteDataById(table, itemId) async {
+  deleteDataById(table, identificationId) async {
     var connection = await database;
-    return await connection.rawDelete("DELETE FROM $table WHERE rowid = $itemId");
+    return await connection.rawDelete("DELETE FROM $table WHERE id=${identificationId};");
   }
 
 }

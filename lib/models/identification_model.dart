@@ -1,6 +1,6 @@
 class Identification{
   int id;
-  int keyId;
+  String keyId;
   String insectOrder;
   double latitude;
   double longitude;
@@ -9,13 +9,13 @@ class Identification{
 
   identificationMap(){
     var mapping = Map<String, dynamic>();
-    mapping['rowid'] = id;
-    //mapping['keyId'] = keyId;
+    mapping['id'] = id;
+    mapping['keyId'] = keyId;
     mapping['insectOrder'] = insectOrder;
-    /*mapping['latitude'] = latitude;
-    mapping['longitude'] = longitude;
+    //mapping['latitude'] = latitude;
+    //mapping['longitude'] = longitude;
     mapping['timestamp'] = timestamp;
-    mapping['photoURI'] = photoURI;*/
+    //mapping['photoURI'] = photoURI;
 
     return mapping;
   }

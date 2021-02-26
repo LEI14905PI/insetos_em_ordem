@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseConnection {
 
-  //open or set database
+  //open/set database
   setDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
     var path = join(directory.path, 'db_ieo');
@@ -15,6 +15,6 @@ class DatabaseConnection {
 
   //creates db
   _onCreatingDatabase(Database database,int version) async {
-    await database.execute('CREATE TABLE identifications(insectOrder TEXT)');
+    await database.execute('CREATE TABLE identifications(id INTEGER PRIMARY KEY, keyId TEXT, insectOrder TEXT, timestamp TEXT, latitude REAL, longitude REAL, photoURI TEXT)');
   }
 }
